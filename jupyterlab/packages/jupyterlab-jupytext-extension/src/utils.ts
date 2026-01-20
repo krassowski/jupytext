@@ -90,9 +90,6 @@ async function getKernelIcon(
       svgstr: base64ToSvgStr(32, iconBase64String),
     });
   }
-  if (fileType && fileType.icon) {
-    return fileType.icon;
-  }
   // If not found, make a generic kernel icon
   return LabIcon.resolve({
     icon: 'ui-components:kernel',
