@@ -378,8 +378,6 @@ const extension: JupyterFrontEndPlugin<void> = {
     registerFileTypes(
       availableKernelLanguages,
       [
-        ...[...JUPYTEXT_PAIR_COMMANDS_FILETYPE_DATA.values()].flat(),
-        ...[...AUTO_LANGUAGE_FILETYPE_DATA.values()].flat(),
       ],
       docRegistry,
       trans,
