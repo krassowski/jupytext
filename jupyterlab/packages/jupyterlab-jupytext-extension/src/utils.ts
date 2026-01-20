@@ -59,7 +59,6 @@ function base64ToSvgStr(width: number, imageBase64: string): string {
  */
 async function getKernelIcon(
   specModel: KernelSpec.ISpecModel,
-  fileType: DocumentRegistry.IFileType | undefined,
 ): Promise<LabIcon> {
   // First check for logo-svg
   if (specModel.resources['logo-svg']) {
@@ -125,21 +124,18 @@ export async function getAvailableKernelLanguages(
         // If we managed to find the language, construct the FileTypeData
         // Here we make an assumption that first extension in
         // languageInfo.extensions is the most common one.
-        const fileExt = languageInfo.extensions[0];
-        const fileType = docRegistry.getFileTypesForPath(`test.${fileExt}`)[0];
         if (languageInfo) {
           // We attempt to get kernelIcon here for specModel.resources
           // If none provided, we return generic kernel icon
-          const kernelIcon = await getKernelIcon(specModel, fileType);
+          const kernelIcon = await getKernelIcon(specModel);
           const displayName =
             languageInfo.displayName || specModel.display_name;
           const exts: IFileTypeData[] = [
             {
-              fileExt,
+              fileExt: languageInfo.extensions[0],
               paletteLabel: `New ${displayName} Text Notebook`,
               caption: `Create a new ${displayName} Text Notebook`,
               kernelIcon: kernelIcon,
-              iconName: fileType.iconClass,
               launcherLabel: displayName,
               kernelName: spec,
             },
