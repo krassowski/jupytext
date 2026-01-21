@@ -139,6 +139,7 @@ export async function getAvailableKernelLanguages(
               paletteLabel: `New ${displayName} Text Notebook`,
               caption: `Create a new ${displayName} Text Notebook`,
               kernelIcon: kernelIcon,
+              iconName: fileType.iconClass,
               launcherLabel: displayName,
               kernelName: spec,
             },
