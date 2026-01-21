@@ -59,6 +59,7 @@ function base64ToSvgStr(width: number, imageBase64: string): string {
  */
 async function getKernelIcon(
   specModel: KernelSpec.ISpecModel,
+  fileType: DocumentRegistry.IFileType | undefined,
 ): Promise<LabIcon> {
   // First check for logo-svg
   if (specModel.resources['logo-svg']) {
@@ -89,6 +90,9 @@ async function getKernelIcon(
       name: `${NS}:icon:${specModel.name}`,
       svgstr: base64ToSvgStr(32, iconBase64String),
     });
+  }
+  if (fileType && fileType.icon) {
+    return fileType.icon;
   }
   // If not found, make a generic kernel icon
   return LabIcon.resolve({
@@ -121,10 +125,12 @@ export async function getAvailableKernelLanguages(
         // If we managed to find the language, construct the FileTypeData
         // Here we make an assumption that first extension in
         // languageInfo.extensions is the most common one.
+        const fileExt = languageInfo.extensions[0];
+        const fileType = docRegistry.getFileTypesForPath(`test.${fileExt}`)[0];
         if (languageInfo) {
           // We attempt to get kernelIcon here for specModel.resources
           // If none provided, we return generic kernel icon
-          const kernelIcon = await getKernelIcon(specModel);
+          const kernelIcon = await getKernelIcon(specModel, fileType);
           const displayName =
             languageInfo.displayName || specModel.display_name;
           const exts: IFileTypeData[] = [
