@@ -135,7 +135,7 @@ export async function getAvailableKernelLanguages(
             languageInfo.displayName || specModel.display_name;
           const exts: IFileTypeData[] = [
             {
-              fileExt: languageInfo.extensions[0],
+              fileExt,
               paletteLabel: `New ${displayName} Text Notebook`,
               caption: `Create a new ${displayName} Text Notebook`,
               kernelIcon: kernelIcon,
